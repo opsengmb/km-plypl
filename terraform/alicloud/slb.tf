@@ -39,12 +39,13 @@ resource "alicloud_alb_listener" "default_80" {
     type = "ForwardGroup"
     forward_group_config {
       server_group_tuples {
-        server_group_id = alicloud_alb_server_group.gl_fe_grp.id
+        server_group_id = alicloud_alb_server_group.gl_be_grp.id
       }
     }
   }
 }
 
+/*
 resource "alicloud_alb_listener" "default_443" {
   load_balancer_id     = alicloud_alb_load_balancer.default.id
   listener_protocol    = "HTTPS"
@@ -110,11 +111,12 @@ resource "alicloud_alb_rule" "gl_fe_rule_https" {
     type  = "ForwardGroup"
   }
 }
-
-resource "alicloud_alb_server_group" "gl_fe_grp" {
+*/
+resource "alicloud_alb_server_group" "gl_be_grp" {
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id
-  server_group_name = "${var.env_name}-${var.project}-gl-fe-grp"
+  server_group_name = "${var.env_name}-${var.project}-gl-be-grp"
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
   health_check_config {
     health_check_connect_port = "80"
     health_check_enabled      = true
@@ -131,9 +133,9 @@ resource "alicloud_alb_server_group" "gl_fe_grp" {
     sticky_session_type    = "Server"
   }
   servers {
-    description = "${var.env_name}-${var.project}-gl-fe"
+    description = "${var.env_name}-${var.project}-gl-be"
     port        = 80
-    server_id   = alicloud_instance.fe_ecs_instance_1.id
+    server_id   = alicloud_instance.be_ecs_instance_1.id
     server_type = "Ecs"
   }
 }
