@@ -6,7 +6,7 @@ module "vpc" {
   vpc_cidr          = var.vpc_cidr
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
 
-  availability_zones = [var.az_a]
+  availability_zones = [var.az_a, var.az_b]
   vswitch_cidrs      = [var.priv_a, var.priv_b, var.priv_c, var.pub_a]
 
   vpc_tags = {
