@@ -117,6 +117,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: plan-output
+          path: "terraform/alicloud"
            
       - name: View Contents
         run: ls -l
