@@ -4,6 +4,7 @@ module "vpc" {
   create            = true
   vpc_name          = "${var.env_name}-${var.project}-vpc"
   vpc_cidr          = var.vpc_cidr
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id
 
   availability_zones = [var.az_a]
   vswitch_cidrs      = [var.priv_a, var.priv_b, var.priv_c, var.pub_a]
@@ -28,6 +29,7 @@ resource "alicloud_nat_gateway" "int_nat_gw1" {
 
 resource "alicloud_eip_address" "eip_addr_snat1" {
   address_name  = "${var.env_name}-${var.project}-eipaddr1"
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 resource "alicloud_eip_association" "int_nat_assoc1" {
@@ -52,6 +54,7 @@ resource "alicloud_nat_gateway" "int_nat_gw2" {
 
 resource "alicloud_eip_address" "eip_addr_snat2" {
   address_name  = "${var.env_name}-${var.project}-eipaddr2"
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 resource "alicloud_eip_association" "int_nat_assoc2" {
