@@ -3,6 +3,6 @@ terraform {
   backend "oss" {
     bucket = "dynamic_env-state-bucket"
     key   = "dynamic_env-state.tfstate"
-    region = var.region
+    region = "ap-southeast-1"
   }
 }
