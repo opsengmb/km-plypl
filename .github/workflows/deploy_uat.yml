@@ -21,7 +21,7 @@ jobs:
   terraform_validate:
     runs-on: ubuntu-latest
     needs: checkout
-  
+   
     steps:
       - uses: actions/download-artifact@master
         with:
@@ -46,14 +46,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate
+        run: terraform -chdir=terraform/alicloud validate
 
 
   terraform_plan:
@@ -86,14 +86,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -var-file=config/uat/terraform.tfvars -out=uat-plan.out
+        run: terraform -chdir=terraform/alicloud plan -var-file=config/uat/terraform.tfvars -out=uat-plan.out
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
@@ -131,7 +131,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
