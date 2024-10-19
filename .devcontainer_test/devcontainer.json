@@ -1,0 +1,12 @@
+{
+    "name": "terraformer",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "features": {},
+    "customizations": {},
+    "forwardPorts": [3000]
+  }
+
+
+

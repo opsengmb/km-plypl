@@ -101,7 +101,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: plan-output
-          path: uat-plan.out
+          path: terraform/alicloud/uat-plan.out
 
           
   terraform_apply:
