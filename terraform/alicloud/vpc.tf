@@ -27,16 +27,17 @@ resource "alicloud_nat_gateway" "int_nat_gw1" {
   nat_type         = "Enhanced"
 }
 
-resource "alicloud_eip_address" "eip_addr_snat1" {
-  address_name  = "${var.env_name}-${var.project}-eipaddr1"
-  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
-}
-
 resource "alicloud_eip_association" "int_nat_assoc1" {
   allocation_id = alicloud_eip_address.eip_addr_snat1.id
   instance_type = "Nat"
   instance_id   = alicloud_nat_gateway.int_nat_gw1.id
 }
+
+resource "alicloud_eip_address" "eip_addr_snat1" {
+  address_name  = "${var.env_name}-${var.project}-eipaddr1"
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
+}
+
 
 resource "alicloud_snat_entry" "int_nat_snat1" {
   snat_table_id     = alicloud_nat_gateway.int_nat_gw1.snat_table_ids
@@ -52,19 +53,51 @@ resource "alicloud_nat_gateway" "int_nat_gw2" {
   nat_type         = "Enhanced"
 }
 
-resource "alicloud_eip_address" "eip_addr_snat2" {
-  address_name  = "${var.env_name}-${var.project}-eipaddr2"
-  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
-}
-
 resource "alicloud_eip_association" "int_nat_assoc2" {
   allocation_id = alicloud_eip_address.eip_addr_snat2.id
   instance_type = "Nat"
   instance_id   = alicloud_nat_gateway.int_nat_gw2.id
 }
 
+resource "alicloud_eip_address" "eip_addr_snat2" {
+  address_name  = "${var.env_name}-${var.project}-eipaddr2"
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
+}
+
 resource "alicloud_snat_entry" "int_nat_snat2" {
   snat_table_id     = alicloud_nat_gateway.int_nat_gw2.snat_table_ids
   source_vswitch_id = module.vpc.vswitch_ids[2]
   snat_ip           = alicloud_eip_address.eip_addr_snat2.ip_address
+}
+
+
+// NEW RTB
+resource "alibabacloudstack_route_table" "rtb_2" {
+  vpc_id      = module.vpc.vpc_id
+  name        = "${var.env_name}-${var.project}-rtb-custom"
+  description = "GW Access"
+}
+
+resource "alibabacloudstack_route_entry" "rtb_2_nat_entry" {
+  route_table_id        = alibabacloudstack_vpc.rtb_2.route_table_id
+  destination_cidrblock = "0.0.0.0/0"
+  nexthop_type          = "NatGateway"
+  nexthop_id            = alicloud_nat_gateway.int_nat_gw1.id
+}
+
+resource "alibabacloudstack_route_table_attachment" "rtb_2_attachment" {
+  vswitch_id     = module.vpc.vswitch_ids[1]
+  route_table_id = alibabacloudstack_route_table.rtb_2.id
+}
+
+resource "alibabacloudstack_route_entry" "rtb_2_nat_entry2" {
+  route_table_id        = alibabacloudstack_vpc.rtb_2.route_table_id
+  destination_cidrblock = "0.0.0.0/0"
+  nexthop_type          = "NatGateway"
+  nexthop_id            = alicloud_nat_gateway.int_nat_gw2.id
+}
+
+resource "alibabacloudstack_route_table_attachment" "rtb_2_attachment2" {
+  vswitch_id     = module.vpc.vswitch_ids[2]
+  route_table_id = alibabacloudstack_route_table.rtb_2.id
 }
