@@ -47,7 +47,7 @@ resource "alicloud_security_group_rule" "be-tcp-dns-egress" {
 resource "alicloud_instance" "be_ecs_instance_1" {
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-gl-be"
-  image_id             = "m-t4n4i6s9ay3vg77czz7y"
+  image_id             = var.image_id
   instance_type        = "ecs.g7.large"
   security_groups      = [alicloud_security_group.be-sg.id]
   vswitch_id           = module.vpc.vswitch_ids[1]

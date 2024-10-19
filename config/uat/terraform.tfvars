@@ -19,3 +19,5 @@ bo_be_domain = "bo-be.betmnl.vip"
 jobproc_domain = "jobproc.betmnl.vip"
 cert_id = "XXXXXXXX"
 
+// image id
+image_id = "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
