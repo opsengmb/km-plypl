@@ -93,7 +93,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform -chdir=terraform/alicloud plan -var-file=config/uat/terraform.tfvars -out=uat-plan.out
+        run: terraform -chdir=terraform/alicloud plan -var-file=../../config/uat/terraform.tfvars -out=uat-plan.out
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
