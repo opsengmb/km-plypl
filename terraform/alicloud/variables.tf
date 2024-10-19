@@ -37,3 +37,7 @@ variable "az_a" {
 variable "az_b" {
     description = "AVAILABILITY ZONE"
 }
+
+variable "image_id" {
+    description = "ECS IMAGE ID"
+}
