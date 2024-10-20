@@ -60,7 +60,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     provider             = alicloud.bridge
     resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
     instance_name        = "${var.env_name}-${var.project}-bridge"
-    image_id             = var.image_id
+    image_id             = var.bridge_image_id
     instance_type        = "ecs.g7.large"
     security_groups      = [alicloud_security_group.bridge-sg.id]
     password             = "dynamic_random_password"
@@ -84,5 +84,4 @@ resource "alicloud_eip_address" "bridge_eip" {
     provider = alicloud.bridge
     bandwidth = "100"
     internet_charge_type = "PayByTraffic"
-    netmode = "public"
 }
