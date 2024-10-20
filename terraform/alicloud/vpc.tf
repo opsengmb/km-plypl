@@ -70,6 +70,16 @@ resource "alicloud_snat_entry" "int_nat_snat2" {
   snat_ip           = alicloud_eip_address.eip_addr_snat2.ip_address
 }
 
+resource "alicloud_route_table_attachment" "rtb_attachment" {
+  vswitch_id     = module.vpc.vswitch_ids[1]
+  route_table_id = module.vpc.route_table_id
+}
+
+resource "alicloud_route_table_attachment" "rtb_attachment2" {
+  vswitch_id     = module.vpc.vswitch_ids[3]
+  route_table_id = module.vpc.route_table_id
+}
+
 // NEW RTB
 resource "alicloud_route_table" "rtb_2" {
   vpc_id      = module.vpc.vpc_id
@@ -89,7 +99,7 @@ resource "alicloud_route_table_attachment" "rtb_2_attachment" {
   route_table_id = alicloud_route_table.rtb_2.id
 }
 
-resource "alicloud_route_table_attachment" "rtb_2_attachment" {
+resource "alicloud_route_table_attachment" "rtb_2_attachment2" {
   vswitch_id     = module.vpc.vswitch_ids[2]
   route_table_id = alicloud_route_table.rtb_2.id
 }
@@ -101,12 +111,3 @@ resource "alicloud_route_entry" "rtb_2_nat_entry2" {
   nexthop_id            = alicloud_nat_gateway.int_nat_gw2.id
 }
 
-resource "alicloud_route_table_attachment" "rtb_2_attachment2" {
-  vswitch_id     = module.vpc.vswitch_ids[1]
-  route_table_id = module.vpc.route_table_id
-}
-
-resource "alicloud_route_table_attachment" "rtb_2_attachment3" {
-  vswitch_id     = module.vpc.vswitch_ids[3]
-  route_table_id = module.vpc.route_table_id
-}
