@@ -30,7 +30,7 @@ resource "alicloud_nat_gateway" "bridge_int_nat_gw1" {
   vpc_id           = alicloud_vpc.bridge_vpc.id
   nat_gateway_name = "${var.env_name}-${var.project}-ingw1"
   payment_type     = "PayAsYouGo"
-  vswitch_id       = alicloud_vswitch.bridge_vswitch_a.vswitch_id
+  vswitch_id       = alicloud_vswitch.bridge_vswitch_a.id
   nat_type         = "Enhanced"
 }
 
@@ -117,7 +117,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     instance_type        = "ecs.g7.large"
     internet_max_bandwidth_out = 100
     security_groups      = [alicloud_security_group.bridge-sg.id]
-    vswitch_id           = alicloud_vswitch.bridge_vswitch_a.vswitch_id
+    vswitch_id           = alicloud_vswitch.bridge_vswitch_a.id
     password             = "dynamic_random_password"
     system_disk_category = "cloud_essd"
     system_disk_size     = 100
