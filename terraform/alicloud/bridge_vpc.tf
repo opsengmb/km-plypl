@@ -39,7 +39,7 @@ resource "alicloud_eip_address" "bridge_eip_addr_snat1" {
 }
 
 
-resource "alicloud_snat_entry" "int_nat_snat1" {
+resource "alicloud_snat_entry" "bridge_int_nat_snat1" {
   snat_table_id     = alicloud_nat_gateway.bridge_int_nat_gw1.snat_table_ids
   source_vswitch_id = module.vpc.vswitch_ids[0]
   snat_ip           = alicloud_eip_address.eip_addbridge_eip_addr_snat1r_snat1.ip_address
