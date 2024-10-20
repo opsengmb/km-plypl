@@ -48,3 +48,6 @@ variable "db_instance_type" {
 variable "db_instance_storage" {
     description = "DATABASE INSTANCE STORAGE"
 }
+variable "bridge_image_id" {
+    description = "BRIDGE INSTANCE STORAGE"
+}
