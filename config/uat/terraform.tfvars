@@ -21,10 +21,17 @@ cert_id = "XXXXXXXX"
 
 // image id
 image_id = "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
-bridge_image_id = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
 
 // db instance type
 db_instance_type = "mariadb.x4.large.2c"
 db_instance_storage = "100"
 db_category = "Basic"
 db_engine_version = "10.3"
+
+// bridge data
+bridge_image_id = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
+bridge_vpc_cidr = "10.62.0.0/24"
+bridge_pub_a = "10.52.0.0/24"
+bridge_region = "ap-northeast-1"
+bridge_az_a = "ap-northeast-1a"
+bridge_az_b = "ap-northeast-1b"

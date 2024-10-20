@@ -1,3 +1,4 @@
+/*
 data "alicloud_db_zones" "default" {}
 
 
@@ -29,3 +30,4 @@ resource "alicloud_db_instance" "default" {
   db_time_zone             = "UTC"
 
 }
+*/

@@ -1,13 +1,14 @@
 provider "alicloud" {
     alias  = "bridge"
-    region = "ap-southeast-3"
+    region = var.bridge_region
 }
-/*
+
 resource "alicloud_security_group" "bridge-sg" {
   provider          = alicloud.bridge
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
+  vpc_id = module.bridge_vpc.vpc_id
 }
 
 resource "alicloud_security_group_rule" "bridge-https" {
@@ -16,7 +17,7 @@ resource "alicloud_security_group_rule" "bridge-https" {
   ip_protocol       = "tcp"
   port_range        = "443/443"
   security_group_id = alicloud_security_group.bridge-sg.id
-  cidr_ip           = var.vpc_cidr
+  cidr_ip           = "0.0.0.0/0"
 }
 
 resource "alicloud_security_group_rule" "bridge-http-egress" {
@@ -63,6 +64,8 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     image_id             = var.bridge_image_id
     instance_type        = "ecs.g7.large"
     internet_max_bandwidth_out = 100
+    security_groups      = [alicloud_security_group.bridge-sg.id]
+    vswitch_id           = module.bridge_vpc.vswitch_ids[0]
     password             = "dynamic_random_password"
     system_disk_category = "cloud_essd"
     system_disk_size     = 100
