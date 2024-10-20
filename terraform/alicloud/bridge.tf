@@ -125,7 +125,6 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     instance_name        = "${var.env_name}-${var.project}-bridge"
     image_id             = var.bridge_image_id
     instance_type        = "ecs.g7.large"
-    internet_max_bandwidth_out = 100
     security_groups      = [alicloud_security_group.bridge-sg.id]
     vswitch_id           = alicloud_vswitch.bridge_vswitch_a.id
     password             = "dynamic_random_password"
@@ -136,14 +135,6 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     }
 }
 
-/*
-// make sure bridge_ecs_instance_1 is public
-resource "alicloud_eip_association" "bridge_eip_assoc" {
-    provider    = alicloud.bridge
-    instance_id = alicloud_instance.bridge_ecs_instance_1.id
-    allocation_id = alicloud_eip_address.bridge_eip.id
-}
-
 // define a public ip for bridge_ecs_instance_1
 resource "alicloud_eip_address" "bridge_eip" {
     resource_group_id = alicloud_resource_manager_resource_group.rg.id
@@ -151,4 +142,10 @@ resource "alicloud_eip_address" "bridge_eip" {
     bandwidth = "100"
     internet_charge_type = "PayByTraffic"
 }
-*/
+
+// make sure bridge_ecs_instance_1 is public
+resource "alicloud_eip_association" "bridge_eip_assoc" {
+    provider    = alicloud.bridge
+    instance_id = alicloud_instance.bridge_ecs_instance_1.id
+    allocation_id = alicloud_eip_address.bridge_eip.id
+}
