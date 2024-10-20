@@ -31,6 +31,6 @@ db_engine_version = "10.3"
 // bridge data
 bridge_image_id = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
 bridge_vpc_cidr = "10.62.0.0/24"
-bridge_pub_a = "10.52.0.0/24"
+bridge_pub_a = "10.62.0.0/29"
 bridge_region = "ap-northeast-1"
 bridge_az_a = "ap-northeast-1a"
