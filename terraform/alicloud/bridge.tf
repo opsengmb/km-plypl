@@ -11,6 +11,7 @@ resource "alicloud_security_group" "bridge-sg" {
 }
 
 resource "alicloud_security_group_rule" "bridge-https" {
+  provider          = alicloud.bridge
   type              = "ingress"
   ip_protocol       = "tcp"
   port_range        = "443/443"
@@ -19,6 +20,7 @@ resource "alicloud_security_group_rule" "bridge-https" {
 }
 
 resource "alicloud_security_group_rule" "bridge-http-egress" {
+  provider          = alicloud.bridge
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "80/80"
@@ -27,6 +29,7 @@ resource "alicloud_security_group_rule" "bridge-http-egress" {
 }
 
 resource "alicloud_security_group_rule" "bridge-https-egress" {
+  provider          = alicloud.bridge
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "443/443"
@@ -35,6 +38,7 @@ resource "alicloud_security_group_rule" "bridge-https-egress" {
 }
 
 resource "alicloud_security_group_rule" "bridge-udp-dns-egress" {
+  provider          = alicloud.bridge
   type              = "egress"
   ip_protocol       = "udp"
   port_range        = "53/53"
@@ -43,6 +47,7 @@ resource "alicloud_security_group_rule" "bridge-udp-dns-egress" {
 }
 
 resource "alicloud_security_group_rule" "bridge-tcp-dns-egress" {
+  provider          = alicloud.bridge
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "53/53"
