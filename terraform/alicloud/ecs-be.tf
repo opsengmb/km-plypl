@@ -45,7 +45,24 @@ resource "alicloud_security_group_rule" "be-tcp-dns-egress" {
   cidr_ip           = "0.0.0.0/0"
 }
 
-resource "alicloud_instance" "be_ecs_instance_1" {
+resource "alicloud_instance" "gl_be_ecs_instance_1" {
+  count = var.env_name == "prod" ? 1 : 0
+  resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
+  instance_name        = "${var.env_name}-${var.project}-bo-be"
+  image_id             = var.image_id
+  instance_type        = "ecs.g7.large"
+  security_groups      = [alicloud_security_group.be-sg.id]
+  vswitch_id           = module.vpc.vswitch_ids[1]
+  password             = "dynamic_random_password"
+  system_disk_category = "cloud_essd"
+  system_disk_size     = 100
+  tags = {
+    Name = "${var.env_name}-${var.project}-bo-be"
+  }
+
+}
+
+resource "alicloud_instance" "bo_be_ecs_instance_1" {
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-gl-be"
   image_id             = var.image_id

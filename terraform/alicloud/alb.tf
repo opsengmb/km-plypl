@@ -39,16 +39,16 @@ resource "alicloud_alb_listener" "http_80" {
     type = "ForwardGroup"
     forward_group_config {
       server_group_tuples {
-        server_group_id = alicloud_alb_server_group.be_grp.id
+        server_group_id = alicloud_alb_server_group.bo_be_grp.id
       }
     }
   }
 }
 
-resource "alicloud_alb_server_group" "be_grp" {
+resource "alicloud_alb_server_group" "bo_be_grp" {
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id
-  server_group_name = "${var.env_name}-${var.project}-be-grp"
+  server_group_name = "${var.env_name}-${var.project}-bo-be-grp"
   resource_group_id = alicloud_resource_manager_resource_group.rg.id 
   health_check_config {
     health_check_connect_port = "80"
@@ -66,9 +66,9 @@ resource "alicloud_alb_server_group" "be_grp" {
     sticky_session_type    = "Server"
   }
   servers {
-    description = "${var.env_name}-${var.project}-be"
+    description = "${var.env_name}-${var.project}-bo-be"
     port        = 80
-    server_id   = alicloud_instance.be_ecs_instance_1.id
+    server_id   = alicloud_instance.bo_be_ecs_instance_1.id
     server_type = "Ecs"
   }
 }
