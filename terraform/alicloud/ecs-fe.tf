@@ -11,7 +11,7 @@ resource "alicloud_security_group_rule" "fe-https" {
   type              = "ingress"
   ip_protocol       = "tcp"
   port_range        = "80/80"
-  security_group_id = alicloud_security_group.fe-sg.id
+  security_group_id = alicloud_security_group.fe-sg.id[0]
   cidr_ip           = var.vpc_cidr
 }
 
@@ -20,7 +20,7 @@ resource "alicloud_security_group_rule" "fe-http-egress" {
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "80/80"
-  security_group_id = alicloud_security_group.fe-sg.id
+  security_group_id = alicloud_security_group.fe-sg.id[0]
   cidr_ip           = "0.0.0.0/0"
 }
 
@@ -29,7 +29,7 @@ resource "alicloud_security_group_rule" "fe-https-egress" {
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "443/443"
-  security_group_id = alicloud_security_group.fe-sg.id
+  security_group_id = alicloud_security_group.fe-sg.id[0]
   cidr_ip           = "0.0.0.0/0"
 }
 
@@ -38,7 +38,7 @@ resource "alicloud_security_group_rule" "fe-udp-dns-egress" {
   type              = "egress"
   ip_protocol       = "udp"
   port_range        = "53/53"
-  security_group_id = alicloud_security_group.fe-sg.id
+  security_group_id = alicloud_security_group.fe-sg.id[0]
   cidr_ip           = "0.0.0.0/0"
 }
 
@@ -47,7 +47,7 @@ resource "alicloud_security_group_rule" "fe-tcp-dns-egress" {
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "53/53"
-  security_group_id = alicloud_security_group.fe-sg.id
+  security_group_id = alicloud_security_group.fe-sg.id[0]
   cidr_ip           = "0.0.0.0/0"
 }
 
@@ -57,7 +57,7 @@ resource "alicloud_instance" "gl_fe_ecs_instance_1" {
   instance_name        = "${var.env_name}-${var.project}-gl-fe"
   image_id             = var.image_id
   instance_type        = "ecs.g7.large"
-  security_groups      = [alicloud_security_group.fe-sg.id]
+  security_groups      = [alicloud_security_group.fe-sg.id[0]]
   vswitch_id           = module.vpc.vswitch_ids[1]
   password             = "dynamic_random_password"
   system_disk_category = "cloud_essd"
@@ -74,7 +74,7 @@ resource "alicloud_instance" "bo_fe_ecs_instance_1" {
   instance_name        = "${var.env_name}-${var.project}-bo-fe"
   image_id             = var.image_id
   instance_type        = "ecs.g7.large"
-  security_groups      = [alicloud_security_group.fe-sg.id]
+  security_groups      = [alicloud_security_group.fe-sg.id[0]]
   vswitch_id           = module.vpc.vswitch_ids[1]
   password             = "dynamic_random_password"
   system_disk_category = "cloud_essd"
