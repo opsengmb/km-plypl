@@ -1,4 +1,10 @@
+provider "alicloud" {
+    alias  = "bridge"
+    region = "ap-northeast-1"
+}
+
 resource "alicloud_security_group" "bridge-sg" {
+  provider          = alicloud.bridge
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
@@ -44,10 +50,6 @@ resource "alicloud_security_group_rule" "bridge-tcp-dns-egress" {
   cidr_ip           = "0.0.0.0/0"
 }
 
-provider "alicloud" {
-    alias  = "bridge"
-    region = "ap-northeast-1"
-}
 
 resource "alicloud_instance" "bridge_ecs_instance_1" {
     provider             = alicloud.bridge
