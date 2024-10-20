@@ -51,14 +51,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate
+        run: terraform -chdir=terraform/alicloud validate
 
 
   terraform_plan:
@@ -91,14 +91,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -var-file=config/prod/terraform.tfvars -out=prod-plan.out
+        run: terraform -chdir=terraform/alicloud plan -var-file=../../config/prod/terraform.tfvars -out=prod-plan.out
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: plan-output
-          path: prod-plan.out
+          path: terraform/alicloud/prod-plan.out
           
   terraform_apply:
     runs-on: ubuntu-latest
@@ -135,14 +135,14 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/alicloud init
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply --auto-approve prod-plan.out
+        run: terraform -chdir=terraform/alicloud apply --auto-approve prod-plan.out
         env:
           ALICLOUD_ACCESS_KEY:  ${{ secrets.ALICLOUD_ACCESS_KEY }}
           ALICLOUD_SECRET_KEY:  ${{ secrets.ALICLOUD_SECRET_KEY }}
