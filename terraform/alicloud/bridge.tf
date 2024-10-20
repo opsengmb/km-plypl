@@ -62,6 +62,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     instance_name        = "${var.env_name}-${var.project}-bridge"
     image_id             = var.bridge_image_id
     instance_type        = "ecs.g7.large"
+    security_groups      = [alicloud_security_group.bridge-sg.id]
     internet_max_bandwidth_out = 100
     password             = "dynamic_random_password"
     system_disk_category = "cloud_essd"
