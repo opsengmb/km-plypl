@@ -11,6 +11,6 @@ resource "alicloud_db_instance" "default" {
   monitoring_period        = "60"
   db_instance_storage_type = "cloud_essd"
   security_ips             = [var.vpc_cidr]
-  category                 = "Basic"
+  category                 = "HighAvailability"
 
 }
