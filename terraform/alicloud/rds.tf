@@ -27,7 +27,5 @@ resource "alicloud_db_instance" "default" {
   category                 = var.db_category
   security_group_ids       = [alicloud_security_group.rds-sg.id]
   db_time_zone             = "UTC"
-  babelfish_config {
-    babelfish_enabled = false
-  }
+
 }
