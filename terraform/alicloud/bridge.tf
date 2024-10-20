@@ -1,31 +1,35 @@
-module "bridge_vpc" {
-  provider          = alicloud.bridge
-  source  = "alibaba/vpc/alicloud"
-
-  create            = true
-  vpc_name          = "${var.env_name}-${var.project}-vpc"
-  vpc_cidr          = var.bridge_vpc_cidr
-  resource_group_id = alicloud_resource_manager_resource_group.rg.id
-
-  availability_zones = [var.bridge_az_a]
-  vswitch_cidrs      = [var.bridge_pub_a]
-
-  vpc_tags = {
-    Environment = var.env_name
-    Name        = "${var.env_name}-${var.project}-vpc"
-  }
-
-  vswitch_tags = {
-    Environment  = var.env_name
-  }
+// new provider with different region
+provider "alicloud" {
+  alias   = "bridge"
+  region  = "ap-northeast-1"
 }
+
+data "alicloud_zones" "bridge_zones" {
+  provider          = alicloud.bridge
+  available_resource_creation = "VSwitch"
+}
+
+
+resource "alicloud_vpc" "bridge_vpc" {
+  provider          = alicloud.bridge
+  vpc_name   = "${var.env_name}-${var.project}-vpc"
+  cidr_block = var.bridge_vpc_cidr
+}
+
+resource "alicloud_vswitch" "bridge_vswitch_a" {
+  provider          = alicloud.bridge
+  vswitch_name = "${var.env_name}-${var.project}-vswitch-a"
+  vpc_id       = alicloud_vpc.bridge_vpc.id
+  zone_id      = data.alicloud_zones.bridge_zones.zones.0.id
+}
+
 
 resource "alicloud_nat_gateway" "bridge_int_nat_gw1" {
   provider          = alicloud.bridge
-  vpc_id           = module.bridge_vpc.vpc_id
+  vpc_id           = alicloud_vpc.bridge_vpc.vpc_id
   nat_gateway_name = "${var.env_name}-${var.project}-ingw1"
   payment_type     = "PayAsYouGo"
-  vswitch_id       = module.bridge_vpc.vswitch_ids[0]
+  vswitch_id       = alicloud_vswitch.bridge_vswitch_a.vswitch_id
   nat_type         = "Enhanced"
 }
 
@@ -45,7 +49,7 @@ resource "alicloud_eip_address" "bridge_eip_addr_snat1" {
 resource "alicloud_snat_entry" "bridge_int_nat_snat1" {
   provider          = alicloud.bridge
   snat_table_id     = alicloud_nat_gateway.bridge_int_nat_gw1.snat_table_ids
-  source_vswitch_id = module.vpc.vswitch_ids[0]
+  source_vswitch_id = alicloud_vpc.bridge_vpc.vpc_id
   snat_ip           = alicloud_eip_address.bridge_eip_addr_snat1.ip_address
 }
 
@@ -55,7 +59,7 @@ resource "alicloud_security_group" "bridge-sg" {
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
-  vpc_id = module.bridge_vpc.vpc_id
+  vpc_id = alicloud_vpc.bridge_vpc.vpc_id
 }
 
 resource "alicloud_security_group_rule" "bridge-https" {
@@ -112,7 +116,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     instance_type        = "ecs.g7.large"
     internet_max_bandwidth_out = 100
     security_groups      = [alicloud_security_group.bridge-sg.id]
-    vswitch_id           = module.bridge_vpc.vswitch_ids[0]
+    vswitch_id           = alicloud_vswitch.bridge_vswitch_a.vswitch_id
     password             = "dynamic_random_password"
     system_disk_category = "cloud_essd"
     system_disk_size     = 100
