@@ -58,10 +58,6 @@ variable "db_engine_version" {
     description = "DB VERSION"
 }
 
-variable "bridge_region" {
-    description = "REGION"
-}
-
 variable "bridge_vpc_cidr" {
     description = "VPC CIDR"
 }
