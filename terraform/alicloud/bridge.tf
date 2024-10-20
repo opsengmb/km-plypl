@@ -73,8 +73,9 @@ resource "alicloud_eip_association" "bridge_eip_assoc" {
 
 // define a public ip for bridge_ecs_instance_1
 resource "alicloud_eip_address" "bridge_eip" {
+    resource_group_id = alicloud_resource_manager_resource_group.rg.id
     provider = alicloud.bridge
     bandwidth = "100"
     internet_charge_type = "PayByTraffic"
-    instance_id = alicloud_instance.bridge_ecs_instance_1.id
+    netmode = "public"
 }
