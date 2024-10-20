@@ -20,13 +20,14 @@ resource "alicloud_vswitch" "bridge_vswitch_a" {
   provider          = alicloud.bridge
   vswitch_name = "${var.env_name}-${var.project}-vswitch-a"
   vpc_id       = alicloud_vpc.bridge_vpc.id
+  cidr_block   = var.bridge_pub_a
   zone_id      = data.alicloud_zones.bridge_zones.zones.0.id
 }
 
 
 resource "alicloud_nat_gateway" "bridge_int_nat_gw1" {
   provider          = alicloud.bridge
-  vpc_id           = alicloud_vpc.bridge_vpc.vpc_id
+  vpc_id           = alicloud_vpc.bridge_vpc.id
   nat_gateway_name = "${var.env_name}-${var.project}-ingw1"
   payment_type     = "PayAsYouGo"
   vswitch_id       = alicloud_vswitch.bridge_vswitch_a.vswitch_id
@@ -59,7 +60,7 @@ resource "alicloud_security_group" "bridge-sg" {
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
-  vpc_id = alicloud_vpc.bridge_vpc.vpc_id
+  vpc_id = alicloud_vpc.bridge_vpc.id
 }
 
 resource "alicloud_security_group_rule" "bridge-https" {
