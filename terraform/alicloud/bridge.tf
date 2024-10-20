@@ -64,7 +64,7 @@ resource "alicloud_security_group" "bridge-sg" {
   description = "${var.env_name}-${var.project} security group"
   vpc_id = alicloud_vpc.bridge_vpc.id
 }
-/*
+
 resource "alicloud_security_group_rule" "bridge-https" {
   provider          = alicloud.bridge
   type              = "ingress"
