@@ -17,7 +17,7 @@ resource "alicloud_security_group_rule" "rds-rule" {
 
 resource "alicloud_db_instance" "default" {
   engine                   = "MariaDB"
-  engine_version           = "10.3"
+  engine_version           = var.db_engine_version
   instance_type            = var.db_instance_type
   instance_storage         = var.db_instance_storage
   instance_name            = "${var.env_name}-${var.project}-master-rds"
@@ -26,6 +26,6 @@ resource "alicloud_db_instance" "default" {
   monitoring_period        = "60"
   db_instance_storage_type = "cloud_essd"
   security_ips             = [var.vpc_cidr]
-  category                 = "HighAvailability"
+  category                 = var.db_category
   security_group_ids       = [alicloud_security_group.rds-sg.id]
 }
