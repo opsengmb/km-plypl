@@ -100,7 +100,7 @@ resource "alicloud_route_table_attachment" "rtb_2_attachment" {
 }
 
 resource "alicloud_route_table_attachment" "rtb_2_attachment2" {
-  vswitch_id     = module.vpc.vswitch_ids[4]
+  vswitch_id     = module.vpc.vswitch_ids[3]
   route_table_id = alicloud_route_table.rtb_2.id
 }
 
