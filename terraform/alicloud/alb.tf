@@ -15,11 +15,11 @@ resource "alicloud_alb_load_balancer" "alb" {
   }
   zone_mappings {
     vswitch_id = module.vpc.vswitch_ids[1]
-    zone_id    = data.alicloud_alb_zones.default.zones.0.id
+    zone_id    = data.alicloud_alb_zones.default.zones.1.id
   }
    zone_mappings {
     vswitch_id = module.vpc.vswitch_ids[2]
-    zone_id    = data.alicloud_alb_zones.default.zones.1.id
+    zone_id    = data.alicloud_alb_zones.default.zones.0.id
   }
   modification_protection_config {
     status = "NonProtection"

@@ -63,6 +63,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
     image_id             = var.bridge_image_id
     instance_type        = "ecs.g7.large"
     security_groups      = [alicloud_security_group.bridge-sg.id]
+    internet_max_bandwidth_out = 100
     password             = "dynamic_random_password"
     system_disk_category = "cloud_essd"
     system_disk_size     = 100
@@ -70,7 +71,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
         Name = "${var.env_name}-${var.project}-bridge"
     }
 }
-
+/*
 // make sure bridge_ecs_instance_1 is public
 resource "alicloud_eip_association" "bridge_eip_assoc" {
     provider    = alicloud.bridge
@@ -85,3 +86,4 @@ resource "alicloud_eip_address" "bridge_eip" {
     bandwidth = "100"
     internet_charge_type = "PayByTraffic"
 }
+*/
