@@ -21,3 +21,7 @@ cert_id = "XXXXXXXX"
 
 // image id
 image_id = "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+
+// db instance type
+db_instance_type = "mariadb.x4.large.2c"
+db_instance_storage = "100"

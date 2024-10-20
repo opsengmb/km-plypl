@@ -41,3 +41,10 @@ variable "az_b" {
 variable "image_id" {
     description = "ECS IMAGE ID"
 }
+
+variable "db_instance_type" {
+    description = "DATABASE INSTANCE TYPE"
+}
+variable "db_instance_storage" {
+    description = "DATABASE INSTANCE STORAGE"
+}
