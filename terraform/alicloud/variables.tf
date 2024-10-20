@@ -73,7 +73,3 @@ variable "bridge_pub_a" {
 variable "bridge_az_a" {
     description = "AVAILABILITY ZONE"
 }
-
-variable "bridge_image_id" {
-    description = "ECS IMAGE ID"
-}
