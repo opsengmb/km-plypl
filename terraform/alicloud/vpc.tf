@@ -72,12 +72,12 @@ resource "alicloud_snat_entry" "int_nat_snat2" {
 
 resource "alicloud_route_table_attachment" "rtb_attachment" {
   vswitch_id     = module.vpc.vswitch_ids[1]
-  route_table_id = module.vpc.route_table_id
+  route_table_id = module.vpc.this_route_table_id
 }
 
 resource "alicloud_route_table_attachment" "rtb_attachment2" {
   vswitch_id     = module.vpc.vswitch_ids[3]
-  route_table_id = module.vpc.route_table_id
+  route_table_id = module.vpc.this_route_table_id 
 }
 
 // NEW RTB
