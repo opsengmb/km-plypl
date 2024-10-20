@@ -1,5 +1,5 @@
 // new provider with different region
-/*
+
 provider "alicloud" {
   alias   = "bridge"
   region  = "ap-northeast-1"
@@ -15,7 +15,7 @@ resource "alicloud_vpc" "bridge_vpc" {
   provider          = alicloud.bridge
   vpc_name   = "${var.env_name}-${var.project}-vpc"
   cidr_block = var.bridge_vpc_cidr
-  #resource_group_id = alicloud_resource_manager_resource_group.rg.id 
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 resource "alicloud_vswitch" "bridge_vswitch_a" {
@@ -24,7 +24,7 @@ resource "alicloud_vswitch" "bridge_vswitch_a" {
   vpc_id       = alicloud_vpc.bridge_vpc.id
   cidr_block   = var.bridge_pub_a
   zone_id      = data.alicloud_zones.bridge_zones.zones.0.id
-  #resource_group_id = alicloud_resource_manager_resource_group.rg.id 
+  resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 
@@ -57,7 +57,7 @@ resource "alicloud_snat_entry" "bridge_int_nat_snat1" {
   snat_ip           = alicloud_eip_address.bridge_eip_addr_snat1.ip_address
 }
 
-
+// SGRP
 resource "alicloud_security_group" "bridge-sg" {
   provider          = alicloud.bridge
   resource_group_id = alicloud_resource_manager_resource_group.rg.id
@@ -65,7 +65,7 @@ resource "alicloud_security_group" "bridge-sg" {
   description = "${var.env_name}-${var.project} security group"
   vpc_id = alicloud_vpc.bridge_vpc.id
 }
-
+/*
 resource "alicloud_security_group_rule" "bridge-https" {
   provider          = alicloud.bridge
   type              = "ingress"
@@ -128,6 +128,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1" {
         Name = "${var.env_name}-${var.project}-bridge"
     }
 }
+
 /*
 // make sure bridge_ecs_instance_1 is public
 resource "alicloud_eip_association" "bridge_eip_assoc" {
