@@ -85,7 +85,12 @@ resource "alicloud_route_entry" "rtb_2_nat_entry" {
 }
 
 resource "alicloud_route_table_attachment" "rtb_2_attachment" {
-  vswitch_id     = module.vpc.vswitch_ids[1]
+  vswitch_id     = module.vpc.vswitch_ids[0]
+  route_table_id = alicloud_route_table.rtb_2.id
+}
+
+resource "alicloud_route_table_attachment" "rtb_2_attachment" {
+  vswitch_id     = module.vpc.vswitch_ids[2]
   route_table_id = alicloud_route_table.rtb_2.id
 }
 
@@ -97,6 +102,11 @@ resource "alicloud_route_entry" "rtb_2_nat_entry2" {
 }
 
 resource "alicloud_route_table_attachment" "rtb_2_attachment2" {
-  vswitch_id     = module.vpc.vswitch_ids[2]
-  route_table_id = alicloud_route_table.rtb_2.id
+  vswitch_id     = module.vpc.vswitch_ids[1]
+  route_table_id = module.vpc.route_table_id
+}
+
+resource "alicloud_route_table_attachment" "rtb_2_attachment3" {
+  vswitch_id     = module.vpc.vswitch_ids[3]
+  route_table_id = module.vpc.route_table_id
 }
