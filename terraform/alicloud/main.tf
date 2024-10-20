@@ -4,7 +4,7 @@ terraform {
     required_version = ">=1.0"
     required_providers {
         alibabacloudstack = {
-        source  = "registry.terraform.io/terraform-alibabacloudstack/alibabacloudstack"
+        source  = "registry.terraform.io/aliyun/alicloud"
         version = ">= 1.0.0"
      }
   }
