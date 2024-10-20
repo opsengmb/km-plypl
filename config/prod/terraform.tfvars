@@ -12,11 +12,10 @@ az_a = "ap-southeast-1a"
 az_b = "ap-southeast-1b"
 
 // domains
-gl_fe_domain = "betmnl.vip"
-gl_be_domain = "gl-be.betmnl.vip"
-bo_fe_domain = "bo-fe.betmnl.vip"
-bo_be_domain = "bo-be.betmnl.vip"
-jobproc_domain = "jobproc.betmnl.vip"
+gl_fe_domain = "playpal.ph"
+gl_be_domain = "gl-be.playpal.ph"
+bo_fe_domain = "bo-fe.playpal.ph"
+bo_be_domain = "bo-be.playpal.ph"
 cert_id = "XXXXXXXX"
 
 // image id

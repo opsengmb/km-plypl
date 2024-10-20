@@ -1,5 +1,4 @@
 // new provider with different region
-
 provider "alicloud" {
   alias   = "bridge"
   region  = "ap-northeast-1"
@@ -63,6 +62,15 @@ resource "alicloud_security_group" "bridge-sg" {
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
   vpc_id = alicloud_vpc.bridge_vpc.id
+}
+
+resource "alicloud_security_group_rule" "bridge-http" {
+  provider          = alicloud.bridge
+  type              = "ingress"
+  ip_protocol       = "tcp"
+  port_range        = "80/80"
+  security_group_id = alicloud_security_group.bridge-sg.id
+  cidr_ip           = "0.0.0.0/0"
 }
 
 resource "alicloud_security_group_rule" "bridge-https" {
