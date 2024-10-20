@@ -55,7 +55,7 @@ resource "alicloud_security_group_rule" "bridge-tcp-dns-egress" {
   security_group_id = alicloud_security_group.bridge-sg.id
   cidr_ip           = "0.0.0.0/0"
 }
-*/
+
 
 resource "alicloud_instance" "bridge_ecs_instance_1" {
     provider             = alicloud.bridge
