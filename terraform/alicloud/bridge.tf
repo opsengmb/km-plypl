@@ -1,4 +1,5 @@
 // new provider with different region
+/*
 provider "alicloud" {
   alias   = "bridge"
   region  = "ap-northeast-1"
@@ -14,6 +15,7 @@ resource "alicloud_vpc" "bridge_vpc" {
   provider          = alicloud.bridge
   vpc_name   = "${var.env_name}-${var.project}-vpc"
   cidr_block = var.bridge_vpc_cidr
+  #resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 resource "alicloud_vswitch" "bridge_vswitch_a" {
@@ -22,6 +24,7 @@ resource "alicloud_vswitch" "bridge_vswitch_a" {
   vpc_id       = alicloud_vpc.bridge_vpc.id
   cidr_block   = var.bridge_pub_a
   zone_id      = data.alicloud_zones.bridge_zones.zones.0.id
+  #resource_group_id = alicloud_resource_manager_resource_group.rg.id 
 }
 
 
