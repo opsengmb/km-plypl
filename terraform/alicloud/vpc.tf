@@ -105,7 +105,7 @@ resource "alicloud_route_table_attachment" "rtb_2_attachment2" {
 }
 
 resource "alicloud_route_entry" "rtb_2_nat_entry2" {
-  route_table_id        = alicloud_route_table.rtb_2.id
+  route_table_id        = module.vpc.this_route_table_id
   destination_cidrblock = "0.0.0.0/0"
   nexthop_type          = "NatGateway"
   nexthop_id            = alicloud_nat_gateway.int_nat_gw2.id
