@@ -111,7 +111,7 @@ jobs:
   terraform_apply:
     runs-on: ubuntu-latest
     needs: [terraform_plan]
-
+    environment: prod
     steps:
       - uses: actions/download-artifact@master
         with:
@@ -121,7 +121,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: plan-output
-           
+          path: "terraform/alicloud"           
       - name: View Contents
         run: ls -l
 
