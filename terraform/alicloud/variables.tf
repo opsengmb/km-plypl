@@ -57,3 +57,23 @@ variable "db_category" {
 variable "db_engine_version" {
     description = "DB VERSION"
 }
+
+variable "bridge_region" {
+    description = "REGION"
+}
+
+variable "bridge_vpc_cidr" {
+    description = "VPC CIDR"
+}
+
+variable "bridge_pub_a" {
+    description = "PUBLIC SWITCH"
+}
+
+variable "bridge_az_a" {
+    description = "AVAILABILITY ZONE"
+}
+
+variable "bridge_image_id" {
+    description = "ECS IMAGE ID"
+}
