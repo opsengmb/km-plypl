@@ -21,6 +21,7 @@ resource "alicloud_security_group_rule" "fe-http-egress" {
   ip_protocol       = "tcp"
   port_range        = "80/80"
   security_group_id = alicloud_security_group.fe-sg[count.index].id
+  cidr_ip           = var.vpc_cidr
 }
 
 resource "alicloud_security_group_rule" "fe-https-egress" {
