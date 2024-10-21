@@ -25,7 +25,7 @@ resource "alicloud_security_group_rule" "be-db-egress" {
   type              = "egress"
   ip_protocol       = "tcp"
   port_range        = "3306/3306"
-  security_group_id = alicloud_security_group.be-sg[count.index].id
+  security_group_id = alicloud_security_group.be-sg.id
   cidr_ip           = "0.0.0.0/0"
 }
 
