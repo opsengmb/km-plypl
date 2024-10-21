@@ -21,6 +21,14 @@ resource "alicloud_security_group_rule" "be-http-egress" {
   cidr_ip           = "0.0.0.0/0"
 }
 
+resource "alicloud_security_group_rule" "be-db-egress" {
+  type              = "egress"
+  ip_protocol       = "tcp"
+  port_range        = "3306/3306"
+  security_group_id = alicloud_security_group.fe-sg[count.index].id
+  cidr_ip           = "0.0.0.0/0"
+}
+
 resource "alicloud_security_group_rule" "be-https-egress" {
   type              = "egress"
   ip_protocol       = "tcp"
