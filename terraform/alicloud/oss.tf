@@ -3,6 +3,6 @@ resource "alicloud_oss_bucket" "bucket" {
 }
 
 resource "alicloud_oss_bucket_acl" "bucket-acl" {
-  bucket = alicloud_oss_bucket.bucket-acl.bucket
+  bucket = alicloud_oss_bucket.bucket.bucket
   acl    = "private"
 }
