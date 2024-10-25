@@ -1,3 +1,4 @@
+// PROJECT NETWORK VARIABLES
 variable "env_name" {
     description = "Environment Name"
 }
@@ -38,6 +39,11 @@ variable "az_b" {
     description = "AVAILABILITY ZONE"
 }
 
+variable "cert_id" {
+    description = "CERTIFICATE ID"
+}
+
+// PROJECT INSTANCE VARIABLES
 variable "image_id" {
     description = "ECS IMAGE ID"
 }
@@ -62,12 +68,36 @@ variable "jp_image_id" {
     description = "ECS IMAGE ID"
 }
 
+variable "gl_fe_domain" {
+    description = "GL FE DOMAIN""
+}
+
+variable "gl_be_domain" {
+    description = "GL BE DOMAIN"
+}
+
+variable "bo_fe_domain" {
+    description = "BO FE DOMAIN"
+}
+
+variable "bo_be_domain" {
+    description = "BO BE DOMAIN"
+}
+
+variable "jp_domain" {
+    description = "JP DOMAIN"
+}
+
+
+// PROJECT DB VARIABLES
 variable "db_instance_type" {
     description = "DATABASE INSTANCE TYPE"
 }
 variable "db_instance_storage" {
     description = "DATABASE INSTANCE STORAGE"
 }
+
+// PROJECT BRIDGE INSTANCE VARIABLES
 variable "bridge_image_id" {
     description = "BRIDGE INSTANCE STORAGE"
 }
@@ -90,6 +120,3 @@ variable "bridge_az_a" {
     description = "AVAILABILITY ZONE"
 }
 
-variable "cert_id" {
-    description = "CERTIFICATE ID"
-}
