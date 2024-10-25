@@ -89,3 +89,7 @@ variable "bridge_pub_a" {
 variable "bridge_az_a" {
     description = "AVAILABILITY ZONE"
 }
+
+variable "cert_id" {
+    description = "CERTIFICATE ID"
+}
