@@ -12,14 +12,20 @@ az_a = "ap-southeast-1a"
 az_b = "ap-southeast-1b"
 
 // domains
-gl_fe_domain = "playpal.ph"
+gl_fe_domain = "www.playpal.ph"
 gl_be_domain = "gl-be.playpal.ph"
 bo_fe_domain = "bo-fe.playpal.ph"
 bo_be_domain = "bo-be.playpal.ph"
-cert_id = "XXXXXXXX"
+jobproc_domain = "jobproc.XXXXXXXX"
+cert_id = "138372-ap-southeast-1"
 
 // image id
 image_id = "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+gl_fe_image_id = "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+gl_be_image_id =  "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+bo_fe_image_id =  "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+bo_be_image_id =  "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
+jp_image_id =  "ubuntu_24_04_x64_20G_alibase_20240923.vhd"
 
 // db instance type
 db_instance_type = "mariadb.x4.large.2c"
