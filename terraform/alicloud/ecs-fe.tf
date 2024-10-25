@@ -21,7 +21,16 @@ resource "alicloud_security_group_rule" "fe-http-egress" {
   ip_protocol       = "tcp"
   port_range        = "80/80"
   security_group_id = alicloud_security_group.fe-sg[count.index].id
-  cidr_ip           = var.vpc_cidr
+  cidr_ip           = "0.0.0.0/0"
+}
+
+resource "alicloud_security_group_rule" "fe-db-egress" {
+  count = var.env_name == "prod" ? 1 : 0
+  type              = "egress"
+  ip_protocol       = "tcp"
+  port_range        = "3306/3306"
+  security_group_id = alicloud_security_group.fe-sg[count.index].id
+  cidr_ip           = "0.0.0.0/0"
 }
 
 resource "alicloud_security_group_rule" "fe-https-egress" {
@@ -55,7 +64,7 @@ resource "alicloud_instance" "gl_fe_ecs_instance_1" {
   count = var.env_name == "prod" ? 1 : 0
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-gl-fe"
-  image_id             = var.image_id
+  image_id             = var.gl_fe_image_id
   instance_type        = "ecs.g7.large"
   security_groups      = [alicloud_security_group.fe-sg[count.index].id]
   vswitch_id           = module.vpc.vswitch_ids[1]
@@ -72,7 +81,7 @@ resource "alicloud_instance" "bo_fe_ecs_instance_1" {
   count = var.env_name == "prod" ? 1 : 0
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-bo-fe"
-  image_id             = var.image_id
+  image_id             = var.bo_fe_image_id
   instance_type        = "ecs.g7.large"
   security_groups      = [alicloud_security_group.fe-sg[count.index].id]
   vswitch_id           = module.vpc.vswitch_ids[1]

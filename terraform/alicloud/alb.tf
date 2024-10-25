@@ -26,6 +26,7 @@ resource "alicloud_alb_load_balancer" "alb" {
   }
 }
 
+// listener port 80
 resource "alicloud_alb_listener" "http_80" {
   load_balancer_id     = alicloud_alb_load_balancer.alb.id
   listener_protocol    = "HTTP"
@@ -45,6 +46,30 @@ resource "alicloud_alb_listener" "http_80" {
   }
 }
 
+// listener port 443
+resource "alicloud_alb_listener" "https_443" {
+  load_balancer_id     = alicloud_alb_load_balancer.alb.id
+  listener_protocol    = "HTTPS"
+  listener_port        = 443
+  listener_description = "${var.env_name}-${var.project}-443-listener"
+  x_forwarded_for_config {
+    x_forwarded_for_proto_enabled = true
+    x_forwarded_for_enabled = true
+  }
+  default_actions {
+    type = "ForwardGroup"
+    forward_group_config {
+      server_group_tuples {
+       server_group_id = alicloud_alb_server_group.bo_be_grp.id
+      }
+    }
+  }
+  certificates {
+    certificate_id = var.cert_id
+  }
+}
+
+// THIS IS GL BE
 resource "alicloud_alb_server_group" "bo_be_grp" {
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id

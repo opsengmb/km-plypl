@@ -42,6 +42,26 @@ variable "image_id" {
     description = "ECS IMAGE ID"
 }
 
+variable "gl_fe_image_id" {
+    description = "ECS IMAGE ID"
+}
+
+variable "gl_be_image_id" {
+    description = "ECS IMAGE ID"
+}
+
+variable "bo_fe_image_id" {
+    description = "ECS IMAGE ID"
+}
+
+variable "bo_be_image_id" {
+    description = "ECS IMAGE ID"
+}
+
+variable "jp_image_id" {
+    description = "ECS IMAGE ID"
+}
+
 variable "db_instance_type" {
     description = "DATABASE INSTANCE TYPE"
 }

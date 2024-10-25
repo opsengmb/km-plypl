@@ -57,7 +57,7 @@ resource "alicloud_instance" "gl_be_ecs_instance_1" {
   count = var.env_name == "prod" ? 1 : 0
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-bo-be"
-  image_id             = var.image_id
+  image_id             = var.gl_be_image_id
   instance_type        = "ecs.g7.large"
   security_groups      = [alicloud_security_group.be-sg.id]
   vswitch_id           = module.vpc.vswitch_ids[1]
@@ -73,7 +73,7 @@ resource "alicloud_instance" "gl_be_ecs_instance_1" {
 resource "alicloud_instance" "bo_be_ecs_instance_1" {
   resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
   instance_name        = "${var.env_name}-${var.project}-gl-be"
-  image_id             = var.image_id
+  image_id             = var.bo_be_image_id
   instance_type        = "ecs.g7.large"
   security_groups      = [alicloud_security_group.be-sg.id]
   vswitch_id           = module.vpc.vswitch_ids[1]
