@@ -85,7 +85,7 @@ variable "bo_be_domain" {
     description = "BO BE DOMAIN"
 }
 
-variable "jp_domain" {
+variable "jobproc_domain" {
     description = "JP DOMAIN"
 }
 
