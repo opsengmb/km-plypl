@@ -71,7 +71,6 @@ resource "alicloud_alb_listener" "https_443" {
 
 // THIS IS GL BE
 resource "alicloud_alb_rule" "gl_be_rule_https" {
-  count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-gl-be-rule-https"
   listener_id = alicloud_alb_listener.https_443.id
   priority    = "3"
@@ -130,7 +129,7 @@ resource "alicloud_alb_rule" "gl_fe_rule_https" {
   rule_conditions {
     type = "Host"
     host_config {
-      values = ["${var.gl_fe_domain}","${var.project}.ph}"]
+      values = ["${var.gl_fe_domain}","${var.project}.ph"]
     }
   }
 
