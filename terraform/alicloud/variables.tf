@@ -68,8 +68,9 @@ variable "jp_image_id" {
     description = "ECS IMAGE ID"
 }
 
+
 variable "gl_fe_domain" {
-    description = "GL FE DOMAIN""
+    description = "GL FE DOMAIN"
 }
 
 variable "gl_be_domain" {
