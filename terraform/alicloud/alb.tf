@@ -108,7 +108,7 @@ resource "alicloud_alb_rule" "gl_be_rule_http" {
       host = var.gl_be_domain
       protocol = "HTTPS"
       http_code = "302"
-
+      port = "443"
     }
     order = "1"
     type  = "Redirect"
