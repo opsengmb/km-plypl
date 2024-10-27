@@ -92,6 +92,29 @@ resource "alicloud_alb_rule" "gl_be_rule_https" {
   }
 }
 
+resource "alicloud_alb_rule" "gl_be_rule_http" {
+  rule_name   = "${var.env_name}-${var.project}-gl-be-rule-http"
+  listener_id = alicloud_alb_listener.http_80.id
+  priority    = "3"
+  rule_conditions {
+    type = "Host"
+    host_config {
+      values = ["${var.gl_be_domain}"]
+    }
+  }
+
+  rule_actions {
+    redirect_config {  
+      host = var.gl_be_domain
+      protocol = "HTTPS"
+      http_code = "302"
+      
+    }
+    order = "1"
+    type  = "ForwardGroup"
+  }
+}
+
 resource "alicloud_alb_server_group" "bo_be_grp" {
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id
