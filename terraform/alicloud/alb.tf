@@ -92,6 +92,7 @@ resource "alicloud_alb_rule" "gl_be_rule_https" {
   }
 }
 
+/*
 resource "alicloud_alb_rule" "gl_be_rule_http" {
   rule_name   = "${var.env_name}-${var.project}-gl-be-rule-http"
   listener_id = alicloud_alb_listener.http_80.id
@@ -114,6 +115,7 @@ resource "alicloud_alb_rule" "gl_be_rule_http" {
     type  = "Redirect"
   }
 }
+*/
 
 resource "alicloud_alb_server_group" "bo_be_grp" {
   protocol          = "HTTP"
@@ -167,6 +169,7 @@ resource "alicloud_alb_rule" "gl_fe_rule_https" {
   }
 }
 
+/*
 resource "alicloud_alb_rule" "gl_fe_rule_http" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-gl-fe-rule-http"
@@ -190,6 +193,7 @@ resource "alicloud_alb_rule" "gl_fe_rule_http" {
     type  = "Redirect"
   }
 }
+*/
 
 resource "alicloud_alb_server_group" "gl_fe_grp" {
   count = var.env_name == "prod" ? 1 : 0
@@ -244,8 +248,7 @@ resource "alicloud_alb_rule" "bo_fe_rule_https" {
   }
 }
 
-
-
+/*
 resource "alicloud_alb_rule" "bo_fe_rule_http" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-bo-fe-rule-http"
@@ -269,6 +272,7 @@ resource "alicloud_alb_rule" "bo_fe_rule_http" {
     type  = "Redirect"
   }
 }
+*/
 
 resource "alicloud_alb_server_group" "bo_fe_grp" {
   count = var.env_name == "prod" ? 1 : 0
@@ -323,7 +327,7 @@ resource "alicloud_alb_rule" "bo_be_rule_https" {
     type  = "ForwardGroup"
   }
 }
-
+/*
 resource "alicloud_alb_rule" "bo_be_rule_http" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-bo-fe-rule-http"
@@ -347,7 +351,7 @@ resource "alicloud_alb_rule" "bo_be_rule_http" {
     type  = "Redirect"
   }
 }
-
+*/
 resource "alicloud_alb_server_group" "bo_be_grp_true" {
   count = var.env_name == "prod" ? 1 : 0
   protocol          = "HTTP"
