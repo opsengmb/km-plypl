@@ -92,6 +92,29 @@ resource "alicloud_alb_rule" "gl_be_rule_https" {
   }
 }
 
+resource "alicloud_alb_rule" "gl_be_rule_http" {
+  rule_name   = "${var.env_name}-${var.project}-gl-be-rule-http"
+  listener_id = alicloud_alb_listener.http_80.id
+  priority    = "3"
+  rule_conditions {
+    type = "Host"
+    host_config {
+      values = ["${var.gl_be_domain}"]
+    }
+  }
+
+  rule_actions {
+    redirect_config {  
+      host = var.gl_be_domain
+      protocol = "HTTPS"
+      http_code = "302"
+      port = "443"
+    }
+    order = "1"
+    type  = "Redirect"
+  }
+}
+
 resource "alicloud_alb_server_group" "bo_be_grp" {
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id
@@ -141,6 +164,30 @@ resource "alicloud_alb_rule" "gl_fe_rule_https" {
     }
     order = "1"
     type  = "ForwardGroup"
+  }
+}
+
+resource "alicloud_alb_rule" "gl_fe_rule_http" {
+  count = var.env_name == "prod" ? 1 : 0
+  rule_name   = "${var.env_name}-${var.project}-gl-fe-rule-http"
+  listener_id = alicloud_alb_listener.http_80.id
+  priority    = "2"
+  rule_conditions {
+    type = "Host"
+    host_config {
+      values = ["${var.gl_fe_domain}"]
+    }
+  }
+
+  rule_actions {
+    redirect_config {  
+      host = var.gl_fe_domain
+      protocol = "HTTPS"
+      http_code = "302"
+      port = "443"
+    }
+    order = "1"
+    type  = "Redirect"
   }
 }
 
@@ -197,6 +244,32 @@ resource "alicloud_alb_rule" "bo_fe_rule_https" {
   }
 }
 
+
+
+resource "alicloud_alb_rule" "bo_fe_rule_http" {
+  count = var.env_name == "prod" ? 1 : 0
+  rule_name   = "${var.env_name}-${var.project}-bo-fe-rule-http"
+  listener_id = alicloud_alb_listener.http_80.id
+  priority    = "4"
+  rule_conditions {
+    type = "Host"
+    host_config {
+      values = ["${var.bo_fe_domain}"]
+    }
+  }
+
+  rule_actions {
+    redirect_config {  
+      host = var.bo_fe_domain
+      protocol = "HTTPS"
+      http_code = "302"
+      port = "443"
+    }
+    order = "1"
+    type  = "Redirect"
+  }
+}
+
 resource "alicloud_alb_server_group" "bo_fe_grp" {
   count = var.env_name == "prod" ? 1 : 0
   protocol          = "HTTP"
@@ -248,6 +321,30 @@ resource "alicloud_alb_rule" "bo_be_rule_https" {
     }
     order = "1"
     type  = "ForwardGroup"
+  }
+}
+
+resource "alicloud_alb_rule" "bo_be_rule_http" {
+  count = var.env_name == "prod" ? 1 : 0
+  rule_name   = "${var.env_name}-${var.project}-bo-fe-rule-http"
+  listener_id = alicloud_alb_listener.http_80.id
+  priority    = "5"
+  rule_conditions {
+    type = "Host"
+    host_config {
+      values = ["${var.bo_be_domain}"]
+    }
+  }
+
+  rule_actions {
+    redirect_config {  
+      host = var.bo_be_domain
+      protocol = "HTTPS"
+      http_code = "302"
+      port = "443"
+    }
+    order = "1"
+    type  = "Redirect"
   }
 }
 

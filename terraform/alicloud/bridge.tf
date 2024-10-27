@@ -62,6 +62,9 @@ resource "alicloud_security_group" "bridge-sg" {
   name        = "${var.env_name}-${var.project}-bridge-sg"
   description = "${var.env_name}-${var.project} security group"
   vpc_id = alicloud_vpc.bridge_vpc.id
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "alicloud_security_group_rule" "bridge-http" {
