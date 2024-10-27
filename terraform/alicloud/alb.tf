@@ -110,7 +110,7 @@ resource "alicloud_alb_rule" "gl_be_rule_http" {
       http_code = "302"
       port = "443"
     }
-    order = "1"
+    order = "2"
     type  = "Redirect"
   }
 }
@@ -265,7 +265,7 @@ resource "alicloud_alb_rule" "bo_fe_rule_http" {
       http_code = "302"
       port = "443"
     }
-    order = "1"
+    order = "3"
     type  = "Redirect"
   }
 }
@@ -343,7 +343,7 @@ resource "alicloud_alb_rule" "bo_be_rule_http" {
       http_code = "302"
       port = "443"
     }
-    order = "1"
+    order = "4"
     type  = "Redirect"
   }
 }
