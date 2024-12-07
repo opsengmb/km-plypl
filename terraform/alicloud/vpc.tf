@@ -110,4 +110,4 @@ resource "alicloud_route_entry" "rtb_2_nat_entry2" {
   nexthop_type          = "NatGateway"
   nexthop_id            = alicloud_nat_gateway.int_nat_gw2.id
 }
-/*
+*/
