@@ -1,6 +1,7 @@
 data "alicloud_alb_zones" "default" {}
 
 resource "alicloud_alb_load_balancer" "alb" {
+  count = var.env_name != "dev" ? 1 : 0
   vpc_id                 = module.vpc.vpc_id
   resource_group_id     = alicloud_resource_manager_resource_group.rg.id 
   address_type           = "Internet"
@@ -28,7 +29,8 @@ resource "alicloud_alb_load_balancer" "alb" {
 
 // listener port 80
 resource "alicloud_alb_listener" "http_80" {
-  load_balancer_id     = alicloud_alb_load_balancer.alb.id
+  count = var.env_name != "dev" ? 1 : 0
+  load_balancer_id     = alicloud_alb_load_balancer.alb[count.index].id
   listener_protocol    = "HTTP"
   listener_port        = 80
   listener_description = "${var.env_name}-${var.project}-80-listener"
@@ -40,7 +42,7 @@ resource "alicloud_alb_listener" "http_80" {
     type = "ForwardGroup"
     forward_group_config {
       server_group_tuples {
-        server_group_id = alicloud_alb_server_group.bo_be_grp.id
+        server_group_id = alicloud_alb_server_group.bo_be_grp[count.index].id
       }
     }
   }
@@ -48,7 +50,8 @@ resource "alicloud_alb_listener" "http_80" {
 
 // listener port 443
 resource "alicloud_alb_listener" "https_443" {
-  load_balancer_id     = alicloud_alb_load_balancer.alb.id
+  count = var.env_name != "dev" ? 1 : 0
+  load_balancer_id     = alicloud_alb_load_balancer.alb[count.index].id
   listener_protocol    = "HTTPS"
   listener_port        = 443
   listener_description = "${var.env_name}-${var.project}-443-listener"
@@ -60,7 +63,7 @@ resource "alicloud_alb_listener" "https_443" {
     type = "ForwardGroup"
     forward_group_config {
       server_group_tuples {
-       server_group_id = alicloud_alb_server_group.bo_be_grp.id
+       server_group_id = alicloud_alb_server_group.bo_be_grp[count.index].id
       }
     }
   }
@@ -71,8 +74,9 @@ resource "alicloud_alb_listener" "https_443" {
 
 // THIS IS GL BE
 resource "alicloud_alb_rule" "gl_be_rule_https" {
+  count = var.env_name != "dev" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-gl-be-rule-https"
-  listener_id = alicloud_alb_listener.https_443.id
+  listener_id = alicloud_alb_listener.https_443[count.index].id
   priority    = "3"
   rule_conditions {
     type = "Host"
@@ -84,7 +88,7 @@ resource "alicloud_alb_rule" "gl_be_rule_https" {
   rule_actions {
     forward_group_config {
       server_group_tuples {
-        server_group_id = alicloud_alb_server_group.bo_be_grp.id
+        server_group_id = alicloud_alb_server_group.bo_be_grp[count.index].id
       }
     }
     order = "1"
@@ -118,6 +122,7 @@ resource "alicloud_alb_rule" "gl_be_rule_http" {
 */
 
 resource "alicloud_alb_server_group" "bo_be_grp" {
+  count = var.env_name != "dev" ? 1 : 0
   protocol          = "HTTP"
   vpc_id            = module.vpc.vpc_id
   server_group_name = "${var.env_name}-${var.project}-gl-be-grp"
@@ -149,7 +154,7 @@ resource "alicloud_alb_server_group" "bo_be_grp" {
 resource "alicloud_alb_rule" "gl_fe_rule_https" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-gl-fe-rule-https"
-  listener_id = alicloud_alb_listener.https_443.id
+  listener_id = alicloud_alb_listener.https_443[count.index].id
   priority    = "2"
   rule_conditions {
     type = "Host"
@@ -228,7 +233,7 @@ resource "alicloud_alb_server_group" "gl_fe_grp" {
 resource "alicloud_alb_rule" "bo_fe_rule_https" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-bo-fe-rule-https"
-  listener_id = alicloud_alb_listener.https_443.id
+  listener_id = alicloud_alb_listener.https_443[count.index].id
   priority    = "4"
   rule_conditions {
     type = "Host"
@@ -308,7 +313,7 @@ resource "alicloud_alb_server_group" "bo_fe_grp" {
 resource "alicloud_alb_rule" "bo_be_rule_https" {
   count = var.env_name == "prod" ? 1 : 0
   rule_name   = "${var.env_name}-${var.project}-bo-be-rule-https"
-  listener_id = alicloud_alb_listener.https_443.id
+  listener_id = alicloud_alb_listener.https_443[count.index].id
   priority    = "5"
   rule_conditions {
     type = "Host"
