@@ -140,7 +140,7 @@ resource "alicloud_alb_server_group" "bo_be_grp" {
   servers {
     description = "${var.env_name}-${var.project}-gl-be"
     port        = 80
-    server_id   = alicloud_instance.bo_be_ecs_instance_1.id
+    server_id   = alicloud_instance.bo_be_ecs_instance_1[count.index].id
     server_type = "Ecs"
   }
 }
