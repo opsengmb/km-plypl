@@ -68,6 +68,37 @@ resource "alicloud_slb_listener" "http-listener" {
   idle_timeout    = 30
 }
 
+resource "alicloud_slb_listener" "https-listener" {
+  count = var.env_name == "dev" ? 1 : 0
+  load_balancer_id          = alicloud_slb_load_balancer.clb[count.index].id
+  server_group_id           = alicloud_slb_server_group.https-default[count.index].id
+  server_certificate_id     = "154901-ap-southeast-1"
+  backend_port              = 80
+  frontend_port             = 443
+  protocol                  = "http"
+  bandwidth                 = -1
+  sticky_session            = "on"
+  sticky_session_type       = "insert"
+  cookie_timeout            = 86400
+  cookie                    = "tfslblistenercookie"
+  health_check              = "on"
+  health_check_connect_port = 80
+  health_check_type         = "http"
+  unhealthy_threshold       = 8
+  health_check_timeout      = 8
+  health_check_interval     = 5
+  health_check_http_code    = "http_2xx,http_3xx"
+  x_forwarded_for {
+    retrive_slb_ip = true
+    retrive_slb_id = true
+  }
+  acl_status      = "on"
+  acl_type        = "white"
+  acl_id          = alicloud_slb_acl.acl[count.index].id
+  request_timeout = 80
+  idle_timeout    = 30
+}
+
 
 
 resource "alicloud_slb_acl" "acl" {
@@ -114,6 +145,23 @@ resource "alicloud_slb_server_group_server_attachment" "http_server_attachment" 
   port            = 80
   weight          = 100
 }
+
+
+// listner https
+resource "alicloud_slb_server_group" "https-default" {
+  count = var.env_name == "dev" ? 1 : 0
+  load_balancer_id = alicloud_slb_load_balancer.clb[count.index].id
+  name             = "${var.env_name}-${var.project}-clb-server-attachment-https"
+}
+
+resource "alicloud_slb_server_group_server_attachment" "http_server_attachment" {
+  count = var.env_name == "dev" ? 1 : 0
+  server_group_id = alicloud_slb_server_group.https-default[count.index].id
+  server_id       = alicloud_instance.dev_ecs_instance_1[count.index].id
+  port            = 80
+  weight          = 100
+}
+
 
 resource "alicloud_security_group" "dev-sg" {
   count = var.env_name == "dev" ? 1 : 0
