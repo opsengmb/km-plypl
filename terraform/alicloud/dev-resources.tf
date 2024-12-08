@@ -75,7 +75,7 @@ resource "alicloud_slb_listener" "https-listener" {
   server_certificate_id     = "154901-ap-southeast-1"
   backend_port              = 80
   frontend_port             = 443
-  protocol                  = "http"
+  protocol                  = "https"
   bandwidth                 = -1
   sticky_session            = "on"
   sticky_session_type       = "insert"
