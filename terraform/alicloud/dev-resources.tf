@@ -72,7 +72,7 @@ resource "alicloud_slb_listener" "https-listener" {
   count = var.env_name == "dev" ? 1 : 0
   load_balancer_id          = alicloud_slb_load_balancer.clb[count.index].id
   server_group_id           = alicloud_slb_server_group.https-default[count.index].id
-  server_certificate_id     = "154901"
+  server_certificate_id     = "5974218251610200_193abde830f_-1962540063_-1032024677"
   backend_port              = 80
   frontend_port             = 443
   protocol                  = "https"
