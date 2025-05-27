@@ -1,7 +1,7 @@
 // new provider with different region
 provider "alicloud" {
   alias   = "bridgeph"
-  region  = "ap-northeast-6"
+  region  = "ap-southeast-6"
 }
 
 data "alicloud_zones" "bridge_zones_ph" {
