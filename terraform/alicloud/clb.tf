@@ -30,6 +30,7 @@ resource "alicloud_slb_listener" "listener" {
   health_check_timeout      = 8
   health_check_interval     = 5
   health_check_http_code    = "http_2xx,http_3xx"
+  server_certificate_id = "5974218251610200_1953e511b7e_954427752_931751590"
   x_forwarded_for {
     retrive_slb_ip = true
     retrive_slb_id = true
