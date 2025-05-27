@@ -17,7 +17,7 @@ resource "alicloud_slb_acl" "acl" {
 }
 
 resource "alicloud_slb_listener" "listener" {
-  load_balancer_id          = alicloud_slb_load_balancer.listener.id
+  load_balancer_id          = alicloud_slb_load_balancer.clb.id
   backend_port              = 80
   frontend_port             = 443
   protocol                  = "https"
