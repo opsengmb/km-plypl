@@ -98,15 +98,16 @@ variable "db_instance_storage" {
     description = "DATABASE INSTANCE STORAGE"
 }
 
-// PROJECT BRIDGE INSTANCE VARIABLES
-variable "bridge_image_id" {
-    description = "BRIDGE INSTANCE STORAGE"
-}
 variable "db_category" {
     description = "DB CATEGORY"
 }
 variable "db_engine_version" {
     description = "DB VERSION"
+}
+
+// PROJECT BRIDGE INSTANCE VARIABLES
+variable "bridge_image_id" {
+    description = "BRIDGE INSTANCE STORAGE"
 }
 
 variable "bridge_vpc_cidr" {
@@ -118,6 +119,23 @@ variable "bridge_pub_a" {
 }
 
 variable "bridge_az_a" {
+    description = "AVAILABILITY ZONE"
+}
+
+// Bridge PH
+variable "bridge_image_id_ph" {
+    description = "BRIDGE INSTANCE STORAGE"
+}
+
+variable "bridge_vpc_ph_cidr" {
+    description = "VPC CIDR"
+}
+
+variable "bridge_pub_a_ph" {
+    description = "PUBLIC SWITCH"
+}
+
+variable "bridge_az_a_ph" {
     description = "AVAILABILITY ZONE"
 }
 

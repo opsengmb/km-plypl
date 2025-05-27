@@ -38,3 +38,8 @@ bridge_image_id = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
 bridge_vpc_cidr = "10.62.0.0/27"
 bridge_pub_a = "10.62.0.0/28"
 bridge_az_a = "ap-northeast-1a"
+
+bridge_image_id_ph = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
+bridge_vpc_ph_cidr = "10.72.0.0/27"
+bridge_pub_a_ph = "10.72.0.0/28"
+bridge_az_a_ph = "ap-northeast-6a"
