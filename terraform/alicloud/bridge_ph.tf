@@ -127,7 +127,7 @@ resource "alicloud_instance" "bridge_ecs_instance_1_ph" {
     resource_group_id    = alicloud_resource_manager_resource_group.rg.id 
     instance_name        = "${var.env_name}-${var.project}-bridge-ph"
     image_id             = var.bridge_image_id_ph
-    instance_type        = "ecs.g7.large"
+    instance_type        = "ecs.g6.large"
     security_groups      = [alicloud_security_group.bridge-sg-ph.id]
     vswitch_id           = alicloud_vswitch.bridge_vswitch_a_ph.id
     password             = "dynamic_random_password"
