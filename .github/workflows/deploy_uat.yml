@@ -84,6 +84,11 @@ jobs:
           replace: ${{ secrets.ALICLOUD_RANDOM_PASSWORD }}
           regex: false
 
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.2 
+      
       - name: Terraform Init
         id: init
         run: terraform -chdir=terraform/alicloud init
@@ -129,6 +134,11 @@ jobs:
           replace: "uat"
           regex: false
           include: "terraform/alicloud/backend.tf"      
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.2           
 
       - name: Terraform Init
         id: init
